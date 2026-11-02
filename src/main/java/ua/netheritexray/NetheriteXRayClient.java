@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
@@ -52,6 +53,7 @@ public class NetheriteXRayClient implements ClientModInitializer {
             if (++scanTimer >= 5) {
                 scanTimer = 0;
                 scan(client.player.getBlockPos(), client.world);
+                client.player.sendMessage(Text.literal("X-Ray: знайдено " + FOUND.size()), true);
             }
         });
 WorldRenderEvents.LAST.register(
