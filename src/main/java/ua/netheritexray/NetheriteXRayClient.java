@@ -67,7 +67,7 @@ WorldRenderEvents.LAST.register(
 
         // Scan loaded client-world blocks in a sphere around the player.
         int minY = Math.max(world.getBottomY(), center.getY() - RADIUS);
-        int maxY = Math.min(world.getTopY() - 1, center.getY() + RADIUS);
+        int maxY = Math.min(world.getBottomY() + world.getHeight() - 1, center.getY() + RADIUS);
 
         BlockPos.Mutable pos = new BlockPos.Mutable();
 
