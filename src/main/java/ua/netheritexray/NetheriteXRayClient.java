@@ -54,10 +54,9 @@ public class NetheriteXRayClient implements ClientModInitializer {
                 scan(client.player.getBlockPos(), client.world);
             }
         });
-
-        WorldRenderEvents.LAST.register(context -> {
-            // Rendering is added in the next rendering stage.
-        });
+WorldRenderEvents.LAST.register(
+    XRayRenderer::render
+);
     }
 
     private static void scan(
