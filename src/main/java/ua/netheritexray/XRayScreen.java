@@ -34,7 +34,7 @@ public class XRayScreen extends Screen {
         renderBackground(context, mouseX, mouseY, delta);
         context.drawCenteredTextWithShadow(textRenderer, title, width / 2, height / 2 - 48, 0xFFFFFF);
         context.drawCenteredTextWithShadow(textRenderer,
-            Text.literal("Показує стародавні уламки поблизу (радіус 24 блоки)"),
+            Text.literal("Показує стародавні уламки поблизу (радіус 32 блоки)"),
             width / 2, height / 2 - 30, 0xBBBBBB);
         super.render(context, mouseX, mouseY, delta);
     }

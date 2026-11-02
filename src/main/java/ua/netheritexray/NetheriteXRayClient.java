@@ -21,6 +21,7 @@ public class NetheriteXRayClient implements ClientModInitializer {
 
     private static boolean enabled = false;
     private static final int RADIUS = 32;
+    private static final int MAX_FOUND = 128;
     private static final List<BlockPos> FOUND = new ArrayList<>();
 
     private static KeyBinding toggleKey;
@@ -48,7 +49,7 @@ public class NetheriteXRayClient implements ClientModInitializer {
                 return;
             }
 
-            if (++scanTimer >= 20) {
+            if (++scanTimer >= 5) {
                 scanTimer = 0;
                 scan(client.player.getBlockPos(), client.world);
             }
@@ -64,7 +65,7 @@ WorldRenderEvents.LAST.register(
     ) {
         FOUND.clear();
 
-        // Scan a 32-block sphere around the player in every direction.
+        // Scan loaded client-world blocks in a sphere around the player.
         int minY = Math.max(world.getBottomY(), center.getY() - RADIUS);
         int maxY = Math.min(world.getTopY() - 1, center.getY() + RADIUS);
 
@@ -87,7 +88,7 @@ WorldRenderEvents.LAST.register(
                     if (world.getBlockState(pos).isOf(Blocks.ANCIENT_DEBRIS)) {
                         FOUND.add(pos.toImmutable());
 
-                        if (FOUND.size() >= 128) {
+                        if (FOUND.size() >= MAX_FOUND) {
                             return;
                         }
                     }
