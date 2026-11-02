@@ -20,7 +20,7 @@ import java.util.List;
 public class NetheriteXRayClient implements ClientModInitializer {
 
     private static boolean enabled = false;
-    private static final int RADIUS = 24;
+    private static final int RADIUS = 32;
     private static final List<BlockPos> FOUND = new ArrayList<>();
 
     private static KeyBinding toggleKey;
@@ -64,14 +64,19 @@ WorldRenderEvents.LAST.register(
     ) {
         FOUND.clear();
 
-        int minY = Math.max(8, center.getY() - RADIUS);
-        int maxY = Math.min(119, center.getY() + RADIUS);
+        // Scan a 32-block sphere around the player in every direction.
+        int minY = Math.max(world.getBottomY(), center.getY() - RADIUS);
+        int maxY = Math.min(world.getTopY() - 1, center.getY() + RADIUS);
 
         BlockPos.Mutable pos = new BlockPos.Mutable();
 
         for (int x = -RADIUS; x <= RADIUS; x++) {
             for (int y = minY; y <= maxY; y++) {
                 for (int z = -RADIUS; z <= RADIUS; z++) {
+
+                    if (x * x + (y - center.getY()) * (y - center.getY()) + z * z > RADIUS * RADIUS) {
+                        continue;
+                    }
 
                     pos.set(
                         center.getX() + x,
