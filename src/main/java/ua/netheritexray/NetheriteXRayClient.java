@@ -41,8 +41,7 @@ public class NetheriteXRayClient implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
 
             while (toggleKey.wasPressed()) {
-                enabled = !enabled;
-                FOUND.clear();
+                client.setScreen(new XRayScreen());
             }
 
             if (!enabled || client.player == null || client.world == null) {
@@ -94,6 +93,12 @@ WorldRenderEvents.LAST.register(
 
     public static boolean isEnabled() {
         return enabled;
+    }
+
+    public static void setEnabled(boolean value) {
+        enabled = value;
+        FOUND.clear();
+        scanTimer = 20;
     }
 
     public static List<BlockPos> getFoundBlocks() {
